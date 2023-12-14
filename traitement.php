@@ -57,7 +57,7 @@
 
             case 'deleteOne':
 
-                
+
                 //il va falloir recup l'id de l'élément à supprimer
             break;
 
@@ -71,7 +71,7 @@
 
             default;
 
-
+                // faille XSS
         }
     }
 
