@@ -14,7 +14,7 @@
     - method -> précise par quelle méthode HTTP les données du formulaire seront transmises au serveur  
     -> ici, on utilise : POST pour ne pas polluer l'URL avec les données sur formulaire  -->
 
-    <form action="traitement.php" method="post">
+    <form action="traitement.php?action=add" method="post">
         <p>
             <label>
                 Nom du produit :

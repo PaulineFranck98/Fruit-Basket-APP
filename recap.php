@@ -35,6 +35,7 @@ Contrairement à index.php -> besoin ici de - parcourir - le tableau de session
                        "<th>Prix</th>",
                        "<th>Quantité</th>",
                        "<th>Total</th>",
+                       "<th></th>",
                    "</tr>",
                "</thead>",
             "<tbody>";
@@ -51,6 +52,7 @@ Contrairement à index.php -> besoin ici de - parcourir - le tableau de session
                     "<td>" . $product['qtt'] . "</td>",
                     // le caractère HTML &nbsp est un espace insécable
                     "<td>" . number_format($product['total'], 2, ",", "&nbsp;") . "&nbsp;€</td>",
+                    "<td><a href='traitement.php?action=deleteOne&id=". $product['']. "'>Supprimer</a></td>",
                 "</tr>";
             // dans la boucle, grâce à l'opérateur combiné +=, on ajoute le total du produit parcouru à la valeur de $totalGeneral qui augmente d'autant pour chaque produit
             $totalGeneral += $product['total'];
@@ -64,7 +66,8 @@ Contrairement à index.php -> besoin ici de - parcourir - le tableau de session
                  "<td><strong>" . number_format($totalGeneral, 2, ",", "&nbsp;"). "&nbsp;€</strong></td>",  
                  "</tr>",
             "</tbody>",
-            "</table>";
+            "</table>",
+            "<a href='traitement.php?action=deleteAll'><input type='submit' name='deleteAll' value='Vider le panier'/><a/>";
 
     }
     ?> 
