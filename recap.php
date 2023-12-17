@@ -25,7 +25,7 @@ Contrairement à index.php -> besoin ici de - parcourir - le tableau de session
 <body>
 <header>
         <h1>Fruit'<span class="mot-vert">n</span>'Click  <i class="fa-regular fa-lemon" style="color: #8dd912;"></i></h1>
-        <h2 class="slogan">le fruit à portée de click</h2>
+        <h2 class="slogan">le fruit à portée de click!</h2>
         <nav>
             <ul>
                 <li><a class='vert' href="index.php">Accueil</a></li>
@@ -38,11 +38,11 @@ Contrairement à index.php -> besoin ici de - parcourir - le tableau de session
         </nav>
     </header>
     <?php
-    // echo "<p>Nombre de produits en session : ". nombreProduitsSession(). "</p>";
+    echo "<p class='message_products'><i class='fa-solid fa-apple-whole' style='color: #8dd912;'></i> Nombre de produits dans le panier : ". nombreProduitsSession(). "</p>";
+    
     // condition qui vérifie :
-    // soit la clé "products"du tableau $_SESSION n'existe pas : !isset()
-    // soit la clé existe mais ne contient aucune donnée : empty()
-
+    // ->soit la clé "products"du tableau $_SESSION n'existe pas : !isset()
+    // ->soit la clé existe mais ne contient aucune donnée : empty()
     if(!isset($_SESSION['products']) || empty($_SESSION['products'])){
         echo "<p>Aucun produit en session ...</p>";
     }
@@ -57,7 +57,7 @@ Contrairement à index.php -> besoin ici de - parcourir - le tableau de session
                     "<thead>",
                         "<tr>",      
                             // ligne d'en-têtes <thead> pour bien décomposer les données de chaque produit
-                            "<th>#</th>", 
+                            "<th class='index_hidden'>#</th>", 
                             "<th>Nom</th>",
                             "<th>Prix</th>",
                             "<th></th>",
@@ -75,14 +75,15 @@ Contrairement à index.php -> besoin ici de - parcourir - le tableau de session
                 foreach($_SESSION['products'] as $index => $product){ 
                     // La boucle crée une ligne <tr> et toutes les cellules <td> nécessaires à chaque partie du produit à afficher pour chaque produit présent en session.
                     echo "<tr style='font-weight:500;' >",
-                            "<td>" . $index . "</td>",
-                            "<td class='border-bottom'>" . $product['name'] . "</td>",
+                            "<td class='index_hidden'>" . $index . "</td>",
+                            // ucfirst() première lettre en majuscule
+                            "<td class='border-bottom'>" . ucfirst($product['name']) . "</td>",
                             // number_format()permet de modifier l'affichage d'une valeur numérique
                             "<td>" . number_format($product['price'], 2, ",", "&nbsp;") . "&nbsp;€</td>",
                             "<td><a href='traitement.php?action=minusOne&id=" . $index . "'><i class='fa-solid fa-minus'></i></a>", 
                             "<td>" . $product['qtt'] . "</td>",
                             "<td><a href='traitement.php?action=plusOne&id=" . $index . "'><i class='fa-solid fa-plus'></i></a></td>",
-                            // le caractère HTML &nbsp est un espace insécable
+                            // le caractère HTML '&nbsp' est un espace insécable
                             "<td>" . number_format($product['total'], 2, ",", "&nbsp;") . "&nbsp;€</td>",
                             "<td><a href='traitement.php?action=deleteOne&id=". $index. "'><i class='fa-solid fa-trash'></i></a></td>",
                             
@@ -91,7 +92,7 @@ Contrairement à index.php -> besoin ici de - parcourir - le tableau de session
                     $totalGeneral += $product['total'];
                 } 
                 // Une fois la boucle terminée, on affiche une dernière ligne avant de refermer le tableau, elle contient 2 cellules : 
-                //-> une cellule fusionnée de 4 cellules (colspan=4) pour l'intitulé
+                //-> une cellule fusionnée de 8 cellules (colspan=8) pour l'intitulé
                 //-> une cellule affichant le contenu formaté de $totalGeneral avec number_format()
 
                 echo "<tr  class='total'>",
