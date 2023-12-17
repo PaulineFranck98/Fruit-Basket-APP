@@ -6,7 +6,7 @@
        - démarrer une session sur le serveur pour l'utilisateur courant
        - récupérer la session de ce même utilisateur s'il en avait déjà une (possible grâce au cookie PHPSESSID)*/   
     session_start();
-
+ 
     // limiter l'accès à traitement.php par les seules requêtes HTTP provenant de la soumission du formulaire :
     // vérifie l'existance de la clé "submit" dans le tableau $_POST -> clé correspondant à l'attribut "name" du bouton
     // -> la condition sera vraie. si la requête POST transmet bien une clé "submit" au serveur
@@ -42,31 +42,51 @@
                         $_SESSION['products'][] = $product;
                         // [] ->raccourci pour indiquer à cet emplacement que nous ajoutons une nouvelle entrée au futur tableau "products" associé à cette clé. 
                         // $_SESSION["products"] doit être lui aussi un tableau afin d'y stocker de nouveaux produits par la suite.
-                    }   
+                        $_SESSION['success']= "Le produit a bien été ajouté à votre panier.";
+                    }else {
+
+                     $_SESSION['error']= "Les données saisies sont invalides.";
+                     
+                    }
+                        
+                    
+
                 }
 
 
             break;
 
             case 'deleteAll':
-
+                   //unset() permet de détruire des variables spécifiées -> ici, tous les éléments stockés dans $_SESSION['products] seront supprimés lorsqu'on appuie sur l'input 'DeleteAll'
                     unset($_SESSION['products']);
-
-                
+   
             break;
 
             case 'deleteOne':
-
-
-                //il va falloir recup l'id de l'élément à supprimer
+                    // $_SESSION['products'] est une variable de session qui stocke les produits dans un tableau associatif
+                    unset($_SESSION['products'][$_GET['id']]);
+                    // $_GET['id'] est une varibale qui récupère la valeur de l'ID du produit à supprimer à partir des données envoyées via la méthode GET$
+                    // $_GET['id'] est entre [] pour utiliser sa valeur comme index pour accéder à un élément spécifique dans le tableau
+                    header('Location:recap.php');
+                    // utilisation de la fonction header()pour rediriger vers la page recap.php (ne pas retourner à l'index à chaque fois)
+                    exit();
+                    // utilisation de la fonction exit() pour interrompre le script à cet endroit précis (ici, ne redirige pas vers index.php)
             break;
 
 
             case 'plusOne':
+                $_SESSION['products'][$_GET['id']]['qtt']++;
+                $_SESSION['products'][$_GET['id']]['total'] = $_SESSION['products'][$_GET['id']]['price'] * $_SESSION['products'][$_GET['id']]['qtt'];
+                header('Location:recap.php');
+                exit();
             break;
-
-
+                
+                
             case 'minusOne':
+                $_SESSION['products'][$_GET['id']]['qtt']--;
+                $_SESSION['products'][$_GET['id']]['total'] = $_SESSION['products'][$_GET['id']]['price'] * $_SESSION['products'][$_GET['id']]['qtt'];
+                header('Location:recap.php');
+                exit();
             break;
 
             default;
