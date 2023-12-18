@@ -48,48 +48,47 @@
         </nav>
     </header>
     <p class='message_products'><i class='fa-solid fa-apple-whole' style='color: #8dd912;'></i> Nombre de produits dans le panier : <?= nombreProduitsSession()?> </p> 
-        <div class="container">
-            <figure>
-                <img src="fruitsboom3.jpg" class="image">
-            </figure>
-            <div class="form-container1">
-                <h2 class="titre2">Ajouter un nouveau produit</h2>
-                <div class="form-container">
-                    <!-- form contient 2 attributs : 
-                    - action -> indique la cible du formulaire, le fichier à atteindre lorsque l'utilisateur soumet le formulaire 
-                    - method -> précise par quelle méthode HTTP les données du formulaire seront transmises au serveur  -->
-                    <form action="traitement.php?action=add" method="post">
-                        <div class=form-group>
-                            <label>
-                                Nom du produit :
-                                <!-- chaque input dispose d'un attribut "name"
-                                -> va permettre à la requête de classer le contenu de la saisie dans des clés portant le nom choisi 
-                                -> ainsi, var_dump($_POST) donnera : "name"-> "", "price"-> "", "qtt"-> "",  après saisie et soumission-->
-                                <input type="text" name="name"> 
-                            </label> 
-                        </div> 
-                        <div class=form-group>
-                            <label>
-                                Prix du produit :
-                                <!-- possède attribut name -->
-                                <input type="number" step="any" name="price"> 
-                            </label> 
-                        </div>
-                        <div class=form-group>
-                            <label>
-                                Quantité désirée :
-                                <!-- possède attribut name -->
-                                <input type="number" name="qtt" value="1"> 
-                            </label> 
-                        </div> 
-                        <div class=form-group>
-                            <!-- possède AUSSI attribut name : permettra de vérifier côté serveur que le formulaire a bien été validé par l'utilisateur -->
-                            <input type="submit" name="submit" value="Ajouter le produit">
-                        </div>
-                    </form>
-                </div>
+    <div class="container">
+        <figure>
+            <img src="fruitsboom3.jpg" class="image">
+        </figure>
+        <div class="form-container1">
+            <h2 class="titre2">Ajouter un nouveau produit</h2>
+            <div class="form-container">
+                <!-- form contient 2 attributs : 
+                - action -> indique la cible du formulaire, le fichier à atteindre lorsque l'utilisateur soumet le formulaire 
+                - method -> précise par quelle méthode HTTP les données du formulaire seront transmises au serveur  -->
+                <form action="traitement.php?action=add" method="post" enctype="multipart/form-data">
+                    <!-- attribut enctype=multipart/forma-data garantit que les données du formulaire sont codées en tant que données MIME en plusieurs parties (nécessaire pour upload grande qtt de données)-->
+                    <div class=form-group>
+                        <label for="fileUpload">Fichier:</label> 
+                        <input type="file" name="photo" id="fileUpload">
+                    </div>
+                    <div class=form-group>
+                        <label> Nom du produit :</label>
+                        <!-- chaque input dispose d'un attribut "name"
+                        -> va permettre à la requête de classer le contenu de la saisie dans des clés portant le nom choisi 
+                        -> ainsi, var_dump($_POST) donnera : "name"-> "", "price"-> "", "qtt"-> "",  après saisie et soumission-->
+                        <input type="text" name="name"> 
+                    </div> 
+                    <div class=form-group>
+                        <label>Prix du produit :</label>
+                        <!-- possède attribut name -->
+                        <input type="number" min="0" step="any" name="price"> 
+                    </div>
+                    <div class=form-group>
+                        <label>Quantité désirée :</label> 
+                        <!-- possède attribut name -->
+                        <input type="number" min="0" name="qtt" value="1"> 
+                    </div> 
+                    <div class=form-group>
+                        <!-- possède AUSSI attribut name : permettra de vérifier côté serveur que le formulaire a bien été validé par l'utilisateur -->
+                        <input type="submit" name="submit" value="Ajouter le produit">
+                    </div>
+                </form>
             </div>
-        </div> 
+        </div>
+    </div> 
    
  
         

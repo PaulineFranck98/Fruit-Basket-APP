@@ -1,5 +1,14 @@
 <?php
 
 function nombreProduitsSession(){
-    return count($_SESSION['products']);
+
+    if(isset($_SESSION['products'])){
+
+        return count($_SESSION['products']);
+
+    }else {
+        
+        return 0;
+    }
+
 }
