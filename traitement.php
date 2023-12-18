@@ -165,3 +165,6 @@
     
     
     // faille XSS
+
+
+    // fonction unlink pour supprimer img du produit dans le dossier upload
