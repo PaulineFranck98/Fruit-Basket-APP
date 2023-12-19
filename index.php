@@ -61,7 +61,7 @@
                 <form action="traitement.php?action=add" method="post" enctype="multipart/form-data">
                     <!-- attribut enctype=multipart/forma-data garantit que les données du formulaire sont codées en tant que données MIME en plusieurs parties (nécessaire pour upload grande qtt de données)-->
                     <div class=form-group>
-                        <label for="fileUpload">Fichier:</label> 
+                        <label for="fileUpload">Photo:</label> 
                         <input type="file" name="photo" id="fileUpload">
                     </div>
                     <div class=form-group>

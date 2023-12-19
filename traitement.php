@@ -8,7 +8,7 @@
     session_start();
  
     // limiter l'accès à traitement.php par les seules requêtes HTTP provenant de la soumission du formulaire :
-    // vérifie l'existance de la clé "submit" dans le tableau $_POST -> clé correspondant à l'attribut "name" du bouton
+    // vérifie l'existence de la clé "submit" dans le tableau $_POST -> clé correspondant à l'attribut "name" du bouton
     // -> la condition sera vraie. si la requête POST transmet bien une clé "submit" au serveur
     
     // vérifie si le paramètre GET'action' est est défini dans l'URL -> vérifie si une action spécifique doit être exécutée
@@ -22,39 +22,55 @@
                 // vérifie si le bouton submit a été pressé (s'assure que le formulaire a bien été envoyé)
                 if(isset($_POST['submit'])){
                     // vérifie si le fichier existe et a été upload sans erreur 
+                    // lorsque le formulaire est soumis, l’info sur le fichier uploadé est accessible via un tableau superglobal appelé _FILES. 
+                    // ici formulaire d’upload contient un champ de sélection de fichier appelé photo (name= »photo »), si un utilisateur a uploadé un fichier en utilisant ce champ
+                    // --> on peut obtenir ses détails :nom, le type, la taille, le nom temporaire ou toute erreur survenue lors de la tentative d’upload via le tableau associatif $_FILES["photo"]
                     if(isset($_FILES['photo']) && $_FILES['photo']['error']==0){
+                        //définit les extensions autorisées
                         $allowed = [
                             "jpg" => "image/jpg",
                             "jpeg" => "image/jpeg",
                             "png" => "image/png",
                         ];
-                      
+                        // spécifie le nom original du fichier et le set dans la variable $filename
                         $filename = $_FILES['photo']['name'];
+                        // spécifie le type MIME fichier --> (Multipurpose Internet Mail Extensions) est un standard permettant d'indiquer la nature et le format d'un document
                         $filetype = $_FILES['photo']['type'];
+                        // spécifie la taille du fichier (en octets) et le set dans la variable $filesize
                         $filesize = $_FILES['photo']['size'];
                         
+                        // récupère/retourne l'extension du fichier : (filepath : chemin d'accès au fichier)
                         $extension = pathinfo($filename, PATHINFO_EXTENSION);
+
+                        // md5() retourne la chaîne (nom photo) sous la forme d'un nombre hexadécimal de 32 caractères
+                        // permet de créer un ID unique pour l'image téléchargée et ainsi éviter les failles d'upload
                         $namePicture= md5($filename). ".". $extension;
+                
 
                         if(!array_key_exists($extension, $allowed)) die("Erreur : extension non autorisée");
-                        // véifie la taille du fichier 2Mb max
+                        // vérifie la taille du fichier 2Mb max
                         $maxsize = 2 * 1024 * 1024;
                         if($filesize > $maxsize) die("Erreur : taille de fichier trop lourde");
 
                         //vérifie le type MIME du fichier 
                         if(in_array($filetype, $allowed)){
-                            // vérifie si le fichier existe avant de le télécharger 
+                            // vérifie si le fichier existe dans le répertoire upload avant de le télécharger 
                             if (file_exists("upload/" . $_FILES['photo']['name'])) {
                                 echo $_FILES['photo']['name']. " existe déjà";
                             }else {
+                                // enregistre le fichier téléchargé dans le répertoire "upload"
                                 move_uploaded_file($_FILES['photo']['tmp_name'], "upload/". $namePicture);
+                                //$_FILES['photo']['tmp_name'] spécifie le nom temporaire, y compris le chemin complet qui est assigné au fichier une fois qu'il a été uploadé sur le serveur
+
                                 echo "Votre fichier a été téléchargé avec succès!";
                             }
                         }else {
                             echo "Erreur : problème de téléchargement du fichier";
                         }
                     }else {
+                        // spécifie le ode d'erreur ou d'état associé à l'upload du fichier, par exemple 0 s'il n'y a pas d'erreur
                         echo "Erreur : " . $_FILES['photo']['error'];
+
                     }   
 
                 
@@ -103,17 +119,26 @@
                 // vérifie s'il y a bien des produits ens session
                 if(isset($_SESSION['products'])){
                    //unset() permet de détruire des variables spécifiées -> ici, tous les éléments stockés dans $_SESSION['products] seront supprimés lorsqu'on appuie sur l'input 'DeleteAll'
-                    unset($_SESSION['products']);
+                    // suppression de tous les éléments $product['photo'] stockés dans $_SESSION['products]
+                    foreach ($_SESSION['products'] as $product) {
+                        // unlink permet de supprimer un fichier dans le répertoire "upload" 
+                        unlink("upload/" . $product['photo'] );
+                    }
+
+                   unset($_SESSION['products']);
+                    
                 }
             break;
             
             case 'deleteOne':
                 if(isset($_SESSION['products'])){
                     // $_SESSION['products'] est une variable de session qui stocke les produits dans un tableau associatif
+                    unlink("upload/" . $_SESSION['products'][$_GET['id']]['photo'] );
                     unset($_SESSION['products'][$_GET['id']]);
                     // $_GET['id'] est une varibale qui récupère la valeur de l'ID du produit à supprimer à partir des données envoyées via la méthode GET$
                     // $_GET['id'] est entre [] pour utiliser sa valeur comme index pour accéder à un élément spécifique dans le tableau
                 }
+
                 header('Location:recap.php');
                 // utilisation de la fonction header()pour rediriger vers la page recap.php (ne pas retourner à l'index à chaque fois)
                 exit();
@@ -144,6 +169,7 @@
                     // utilisation de la fonction header() pour arrêter le script
                     if ($_SESSION['products'][$_GET['id']]['qtt'] == 0) {
                         // supprime le produit spécifié (avec l'ID passé en paramètre GET)
+                        unlink("upload/" . $_SESSION['products'][$_GET['id']]['photo'] );
                         unset($_SESSION['products'][$_GET['id']]);
                         // diminue la qtt du produit spécifié (avec l'ID passé en paramètre GET)
                         header('Location:recap.php');
@@ -164,7 +190,5 @@
     header("Location:index.php");
     
     
-    // faille XSS
-
-
-    // fonction unlink pour supprimer img du produit dans le dossier upload
+    // faille XSS : faille permettant à un attaquant d'injecter dans un site web un code malveillant 
+    // faille d'upload : faille permettant d'uploader des fichiers avecune extension non autorisée 
