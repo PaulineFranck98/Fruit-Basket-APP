@@ -75,7 +75,7 @@ Contrairement à index.php -> besoin ici de - parcourir - le tableau de session
                 // exécute produit par produit les mêmes instructions qui vont permettre l'affichage uniforme de chacun d'entre eux
                 foreach($_SESSION['products'] as $index => $product){ 
                     // La boucle crée une ligne <tr> et toutes les cellules <td> nécessaires à chaque partie du produit à afficher pour chaque produit présent en session.
-                    echo "<tr style='font-weight:500;' >",
+                    echo "<tr >",
                             "<td><figure><img class='img-products' src='upload/" . $product['photo'] . "' alt=" . $product['name'] . "></figure></td>",
                             "<td class='index_hidden'>" . $index . "</td>",
                             // ucfirst() première lettre en majuscule
