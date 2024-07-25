@@ -6,7 +6,7 @@
 
 <h3>📃 Description</h3>
 <br/>
-<strong>ICINEMA</strong> est un projet de site web permettant de présenter des films avec leurs informations détaillées, y compris le casting - acteurs - et le réalisateur. Les films sont classés par genre, et il est possible d’ajouter, modifier ou supprimer chaque élément - casting, film, réalisateur, genre, etc.
+<strong>Fruit’n’Click</strong> est une application qui permet aux utilisateurs d'ajouter, consulter et gérer des fruits dans un panier. 
 
 <br/></br>
 
