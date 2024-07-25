@@ -8,7 +8,20 @@
 <br/>
 <strong>Fruit’n’Click</strong> est une application qui permet aux utilisateurs d'ajouter, consulter et gérer des fruits dans un panier. 
 
-<br/></br>
+<br/>
+</br>
+
+<h3 align="center">⚙️ Technologies utilisées</h3>
+
+<p align="center">
+  <a href="https://skillicons.dev">
+    <img src="https://skillicons.dev/icons?i=html,css,php,vscode,github,git,docker" />
+  </a
+</p>
+<br/>
+<br/>
+<br/>
+<br/>
 
 <div align="center">
 
