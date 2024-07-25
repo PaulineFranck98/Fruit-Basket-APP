@@ -1,0 +1,1 @@
+![](banner-fruit-click.png)
