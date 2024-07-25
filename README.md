@@ -23,18 +23,18 @@
 <br/>
 <br/>
 
-<div align="center">
 
-  <strong>Ajout de produits</strong> : Formulaire permettant aux utilisateurs d'ajouter un nouveau produit avec un nom, un    prix, une quantité et une photo.
+<img src="./checked-green.png" width="14"/><strong> Ajout de produits</strong> : Formulaire permettant aux utilisateurs d'ajouter un nouveau produit avec un nom, un    prix, une quantité et une photo.
   <br/>
   <br/>
+  <div align="center">
+    <img src="./fruit-n-click11.png"/>
+  </div>
   
-  <img src="./fruit-n-click11.png"/>
-
   <br/>
   <br/>
 
   <img src="./fruit-n-click12.png"/>
 
 
-</div>
+
