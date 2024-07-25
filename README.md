@@ -1,10 +1,10 @@
 ![](banner-fruit-click.png)
 
-<div style="display:flex; justify-content:center;">
+<div align="center">
 
   <img src="./fruit-n-click11.png"/>
 
-
+  <br/>
   <br/>
 
   <img src="./fruit-n-click12.png"/>
