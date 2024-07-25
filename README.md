@@ -26,6 +26,9 @@
 <div align="center">
 
   <strong>Ajout de produits</strong> : Formulaire permettant aux utilisateurs d'ajouter un nouveau produit avec un nom, un    prix, une quantité et une photo.
+  <br/>
+  <br/>
+  
   <img src="./fruit-n-click11.png"/>
 
   <br/>
